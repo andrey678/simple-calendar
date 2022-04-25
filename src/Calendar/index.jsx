@@ -32,7 +32,9 @@ class Calendar extends React.Component{
                     {/* Дни недели */}
                     <thead>
                         <tr>
-
+                            {weekDayNames.map(name => 
+                                <th name={name}>{name}</th>    
+                            )}
                         </tr>
                     </thead>
                     {/* Ряды из дней по неделям */}
