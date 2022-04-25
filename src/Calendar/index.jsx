@@ -1,4 +1,7 @@
 import React from 'react';
+import classnames from 'classnames';
+
+import * as calendar from './calendar';
 
 import './index.css';
 
@@ -57,13 +60,10 @@ class Calendar extends React.Component{
     };
     render(){
         const { years, monthNames, weekDayNames } = this.props;
-        const monthData = [
-            [undefined, undefined, new Date(), new Date(), new Date(), new Date(), new Date()],
-            [new Date(), new Date(), new Date(), new Date(), new Date(), new Date(), new Date()],
-            [new Date(), new Date(), new Date(), new Date(), new Date(), new Date(), new Date()],
-            [new Date(), new Date(), new Date(), new Date(), new Date(), new Date(), new Date()],
-            [new Date(), new Date(), new Date(), new Date(), undefined, undefined, undefined],
-        ];
+
+        const { currentDate, selectedDate } = this.state;
+        // получаем данные с помощью внешнего модуля calendar
+        const monthData = calendar.getMonthData(this.year, this.month);
         return (
             <div className="calendar">
                 {/* Элементы управления */}
@@ -71,7 +71,7 @@ class Calendar extends React.Component{
                     <button onClick={this.handlePrevMonthButtonClick}>{'<'}</button>
                     <select
                         ref={element => this.monthSelect = element}
-                        defaultValue={this.month}
+                        value={this.month}
                         onChange={this.handleSelectChange}
                     >
                         {monthNames.map((name, index) => 
@@ -80,7 +80,7 @@ class Calendar extends React.Component{
                     </select>
                     <select 
                         ref={element => this.monthSelect = element}
-                        defaultValue={this.year}    
+                        value={this.year}    
                         onChange={this.handleSelectChange}
                     >
                         {years.map(year => 
@@ -106,7 +106,10 @@ class Calendar extends React.Component{
                                 {week.map((date, index) => date ?
                                     <td 
                                         key={index} 
-                                        className="day"
+                                        className={classnames('day',{
+                                            'today': calendar.areEqual(date, currentDate),
+                                            'selected': calendar.areEqual(date, selectedDate)
+                                        })}
                                         onClick={() => this.handleDayClick(date)}
                                         >{date.getDate()}</td>
                                     :
