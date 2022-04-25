@@ -10,6 +10,13 @@ class Calendar extends React.Component{
     };
     render(){
         const { years, monthNames, weekDayNames } = this.props;
+        const monthData = [
+            [undefined, undefined, new Date(), new Date(), new Date(), new Date(), new Date()],
+            [new Date(), new Date(), new Date(), new Date(), new Date(), new Date(), new Date()],
+            [new Date(), new Date(), new Date(), new Date(), new Date(), new Date(), new Date()],
+            [new Date(), new Date(), new Date(), new Date(), new Date(), new Date(), new Date()],
+            [new Date(), new Date(), new Date(), new Date(), undefined, undefined, undefined],
+        ];
         return (
             <div className="calendar">
                 {/* Элементы управления */}
@@ -39,7 +46,15 @@ class Calendar extends React.Component{
                     </thead>
                     {/* Ряды из дней по неделям */}
                     <tbody>
-
+                        {monthData.map((week, index) =>
+                            <tr key={index} className="week">
+                                {week.map((date, index) => date ?
+                                    <td key={index} className="day">{date.getDate()}</td>
+                                    :
+                                    <td key={index} />
+                                )}
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>
