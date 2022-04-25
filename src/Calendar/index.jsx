@@ -8,7 +8,41 @@ class Calendar extends React.Component{
         monthNames: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
         weekDayNames: ['Пн','Вт','Ср','Чт','Пт','Сб','Вс']
     };
-    
+    render(){
+        const { years, monthNames, weekDayNames } = this.props;
+        return (
+            <div className="calendar">
+                {/* Элементы управления */}
+                <header>
+                    <button>{'<'}</button>
+                    <select>
+                        {monthNames.map((name, index) => 
+                            <option key={name} value={index}>{name}</option>
+                        )}
+                    </select>
+                    <select>
+                        {years.map(year => 
+                            <option key={year} value={year}>{year}</option>    
+                        )}
+                    </select>
+                    <button>{'>'}</button>
+                </header>
+                {/* Календарь */}
+                <table>
+                    {/* Дни недели */}
+                    <thead>
+                        <tr>
+
+                        </tr>
+                    </thead>
+                    {/* Ряды из дней по неделям */}
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
 }
 
 export default Calendar;
